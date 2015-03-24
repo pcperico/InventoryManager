@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="Mappings">
+  <class name="Data.Entities.Proveedor" table="Proveedor">
+    <id column="Id" name="Id" type="int">
+      <generator class="identity"/>
+    </id>
+    <property name="Nombre" type="string"  column="Nombre"/>
+    <property name="Direccion" type="string"  column="Direccion"/>
+    <property name="Telefono" type="string"  column="Telefono"/>
+    <property name="Pais" type="string"  column="Pais"/>
+    <property name="Contacto" type="string"  column="Contacto"/>
+    <property name="Email" type="string"  column="Email"/>
+    <property name="Active" type="int"  column="Active"/>
+  </class>
+  <sql-query name="Proveedor.GetActives">
+	<return alias="p" class="Data.Entities.Proveedor"/>
+	<![CDATA[select * from Proveedor p where p.Active = 1]]>
+  </sql-query>
+  <sql-query name="Proveedor.FindByName">
+	<return alias="p" class="Data.Entities.Proveedor"/>
+	<![CDATA[select * from Proveedor p where p.Nombre like :name ]]>
+  </sql-query>
+</hibernate-mapping>
