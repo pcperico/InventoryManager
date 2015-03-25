@@ -98,7 +98,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     private void ProveedoresListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProveedoresListarActionPerformed
         ListarProveedores listProv=new ListarProveedores();
-         this.add(listProv); 
+        this.add(listProv); 
         listProv.Centrar();
         listProv.show();
     }//GEN-LAST:event_ProveedoresListarActionPerformed

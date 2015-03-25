@@ -29,7 +29,8 @@ public class AgregarProveedor extends JInternalFrameCenter {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(StringsKeysHelper.applicationContextFile);
         _proveedorRepository = (IProveedorRepository)ctx.getBean(StringsKeysHelper.ProveedorRepository);
     }
-
+    
+    protected Proveedor prov;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -57,6 +58,23 @@ public class AgregarProveedor extends JInternalFrameCenter {
 
         setClosable(true);
         setTitle("Agregar Proveedores");
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         Panel.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
@@ -188,15 +206,47 @@ public class AgregarProveedor extends JInternalFrameCenter {
     }//GEN-LAST:event_btn_limpiarActionPerformed
 
     private void btn_crearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_crearActionPerformed
-        _proveedorRepository.Save(
+        if(prov!=null)
+        {
+            prov.setContacto(this.txt_contacto.getText().trim());
+            prov.setDireccion(this.txt_direccion.getText().trim());
+            prov.setEmail(this.txt_mail.getText().trim());
+            prov.setNombre(this.txt_Nombre.getText().trim());
+            prov.setTelefono(this.txt_telefono.getText().trim());
+            prov.setPais(this.txt_pais.getText().trim());
+            _proveedorRepository.Update(prov);            
+            this.clearFields();
+            this.dispose();
+            JOptionPane.showMessageDialog(rootPane, "Proveedor Actualizado Correctamente!");
+        }
+        else
+        {
+            _proveedorRepository.Save(
                 new Proveedor(
-                        this.txt_Nombre.getText(),this.txt_direccion.getText(),this.txt_telefono.getText(),
-                        this.txt_pais.getText(),this.txt_contacto.getText(),this.txt_mail.getText(),1
+                        this.txt_Nombre.getText().trim(),this.txt_direccion.getText().trim(),this.txt_telefono.getText().trim(),
+                        this.txt_pais.getText().trim(),this.txt_contacto.getText().trim(),this.txt_mail.getText().trim(),1
                         )
         );
         this.clearFields();
         JOptionPane.showMessageDialog(rootPane, "Proveedor Almacenado Correctamente!");
+        }
+        
     }//GEN-LAST:event_btn_crearActionPerformed
+
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        if(prov!=null)
+        {            
+            this.txt_Nombre.setText(prov.getNombre());
+            this.txt_contacto.setText(prov.getContacto());
+            this.txt_direccion.setText(prov.getDireccion());
+            this.txt_telefono.setText(prov.getTelefono());
+            this.btn_crear.setText("Actualizar");
+            this.txt_mail.setText(prov.getEmail());
+            this.txt_pais.setText(prov.getPais());
+            this.setTitle("Actualizar Proveedores");  
+            this.btn_limpiar.setEnabled(false);
+        }
+    }//GEN-LAST:event_formInternalFrameOpened
 
     private void clearFields()
     {

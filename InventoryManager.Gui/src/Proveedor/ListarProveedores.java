@@ -9,7 +9,9 @@ import Data.Configuration.StringsKeysHelper;
 import Data.Dao.Interfaces.IProveedorRepository;
 import Data.Entities.Proveedor;
 import General.JInternalFrameCenter;
+import java.awt.Component;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -32,6 +34,26 @@ public class ListarProveedores extends JInternalFrameCenter {
         dtm.addColumn("Id");
         dtm.addColumn("Nombre");
         dtm.addColumn("Estado");
+        this.DisablePanelOptions();
+    }
+    
+    private int flagBtnActiveDelete=0;
+    private void DisablePanelOptions()
+    {
+        this.panelProveedorOptions.setEnabled(false);
+        for(Component c : this.panelProveedorOptions.getComponents())
+        {
+            c.setEnabled(false);
+        }
+    }
+    
+    private void EnablePanelOptions()
+    {
+        this.panelProveedorOptions.setEnabled(true);
+        for(Component c : this.panelProveedorOptions.getComponents())
+        {
+            c.setEnabled(true);
+        }
     }
 
     /**
@@ -48,10 +70,19 @@ public class ListarProveedores extends JInternalFrameCenter {
         btn_listActives = new javax.swing.JButton();
         txt_nombreProv = new javax.swing.JTextField();
         bnt_filtrar = new javax.swing.JButton();
+        btn_listAll = new javax.swing.JButton();
+        panelProveedorOptions = new javax.swing.JPanel();
+        bnt_edit = new javax.swing.JButton();
+        btn_delete = new javax.swing.JButton();
 
         setClosable(true);
 
         ProveedoresTable.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        ProveedoresTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ProveedoresTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(ProveedoresTable);
 
         btn_listActives.setText("Listar Activos");
@@ -68,6 +99,50 @@ public class ListarProveedores extends JInternalFrameCenter {
             }
         });
 
+        btn_listAll.setText("Listar Inactivos");
+        btn_listAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_listAllActionPerformed(evt);
+            }
+        });
+
+        panelProveedorOptions.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        panelProveedorOptions.setEnabled(false);
+
+        bnt_edit.setText("Modificar");
+        bnt_edit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bnt_editActionPerformed(evt);
+            }
+        });
+
+        btn_delete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deleteActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelProveedorOptionsLayout = new javax.swing.GroupLayout(panelProveedorOptions);
+        panelProveedorOptions.setLayout(panelProveedorOptionsLayout);
+        panelProveedorOptionsLayout.setHorizontalGroup(
+            panelProveedorOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelProveedorOptionsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelProveedorOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(bnt_edit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_delete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panelProveedorOptionsLayout.setVerticalGroup(
+            panelProveedorOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelProveedorOptionsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(bnt_edit)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_delete)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -81,8 +156,11 @@ public class ListarProveedores extends JInternalFrameCenter {
                         .addGap(18, 18, 18)
                         .addComponent(bnt_filtrar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_listActives)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btn_listActives, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btn_listAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelProveedorOptions, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,9 +171,15 @@ public class ListarProveedores extends JInternalFrameCenter {
                     .addComponent(bnt_filtrar))
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_listActives))
-                .addContainerGap(152, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btn_listActives)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_listAll)
+                        .addGap(18, 18, 18)
+                        .addComponent(panelProveedorOptions, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 159, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -103,13 +187,61 @@ public class ListarProveedores extends JInternalFrameCenter {
     
     private void btn_listActivesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_listActivesActionPerformed
         List<Proveedor> list = _proveedorRepository.GetAllActives();
-        this.fillTableProveedor(list, dtm);        
+        this.fillTableProveedor(list, dtm);     
+        flagBtnActiveDelete=0;
+        this.btn_delete.setText("Desactivar");
     }//GEN-LAST:event_btn_listActivesActionPerformed
 
     private void bnt_filtrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_filtrarActionPerformed
         List<Proveedor> list = _proveedorRepository.FindByName(this.txt_nombreProv.getText());
         this.fillTableProveedor(list, dtm);
     }//GEN-LAST:event_bnt_filtrarActionPerformed
+
+    private void btn_listAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_listAllActionPerformed
+        List<Proveedor>list = _proveedorRepository.GetAllInactives();
+        this.fillTableProveedor(list, dtm);
+        flagBtnActiveDelete=1;
+        this.btn_delete.setText("Activar");
+    }//GEN-LAST:event_btn_listAllActionPerformed
+
+    int proveedorId =0;
+    private void ProveedoresTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ProveedoresTableMouseClicked
+        proveedorId =(int) this.ProveedoresTable.getValueAt(this.ProveedoresTable.getSelectedRow(),0);
+        if(proveedorId>0)
+            EnablePanelOptions();        
+    }//GEN-LAST:event_ProveedoresTableMouseClicked
+
+    private void bnt_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_editActionPerformed
+        Proveedor p = _proveedorRepository.Get(proveedorId);
+        AgregarProveedor ap = new AgregarProveedor();
+        this.getParent().add(ap);
+        this.dispose();
+        ap.prov=p;
+        ap.Centrar();
+        ap.show();
+    }//GEN-LAST:event_bnt_editActionPerformed
+
+    private void btn_deleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deleteActionPerformed
+        int x=-1;
+        if(flagBtnActiveDelete==1)
+        {            
+             x= JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que desea activar este proveedor?");
+             if(x==0)
+             {
+                _proveedorRepository.EnableProveedor(proveedorId);
+                JOptionPane.showMessageDialog(rootPane, "Proveedor desactivado correctamente!");        
+             }            
+        }
+        else
+        {
+            x = JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que desea desactivar este proveedor?");
+            if(x==1)
+            {
+                _proveedorRepository.DisableProveedor(proveedorId);
+            JOptionPane.showMessageDialog(rootPane, "Proveedor desactivado correctamente!");        
+            }            
+        }                
+    }//GEN-LAST:event_btn_deleteActionPerformed
 
     private void fillTableProveedor(List<Proveedor> proveedores,DefaultTableModel model)    
     {        
@@ -127,9 +259,13 @@ public class ListarProveedores extends JInternalFrameCenter {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable ProveedoresTable;
+    private javax.swing.JButton bnt_edit;
     private javax.swing.JButton bnt_filtrar;
+    private javax.swing.JButton btn_delete;
     private javax.swing.JButton btn_listActives;
+    private javax.swing.JButton btn_listAll;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panelProveedorOptions;
     private javax.swing.JTextField txt_nombreProv;
     // End of variables declaration//GEN-END:variables
 }
