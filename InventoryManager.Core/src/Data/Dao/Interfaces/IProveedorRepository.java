@@ -15,5 +15,8 @@ import java.util.List;
  */
 public interface IProveedorRepository extends IRepositoryBase<Proveedor> {
     List<Proveedor> GetAllActives(); 
+    List<Proveedor> GetAllInactives(); 
     List<Proveedor> FindByName(String name);
+    void DisableProveedor(int proveedorId);
+    void EnableProveedor(int proveedorId);
 }

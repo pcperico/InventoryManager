@@ -32,4 +32,26 @@ public class ProveedorRepository extends RepositoryBase<Proveedor>  implements I
         sesion.close();
         return proveedores;
     }
+
+    @Override
+    public void DisableProveedor(int proveedorId) {        
+        Proveedor p = this.Get(proveedorId);
+        p.setActive(0);
+        this.Update(p);        
+    }
+
+    @Override
+    public void EnableProveedor(int proveedorId) {
+        Proveedor p = this.Get(proveedorId);
+        p.setActive(1);
+        this.Update(p);        
+    }
+
+    @Override
+    public List<Proveedor> GetAllInactives() {
+        beginOperation();
+       List<Proveedor> proveedores= sesion.getNamedQuery("Proveedor.GetInactives").list();       
+       sesion.close();
+       return proveedores;
+    }
 }

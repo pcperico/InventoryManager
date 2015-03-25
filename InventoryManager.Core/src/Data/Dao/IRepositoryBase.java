@@ -16,4 +16,5 @@ public interface IRepositoryBase<T> {
     public void Delete(T entity);
     public List<T> GetAll();
     public T Get(int id);
+    public void Update(T entity);
 }

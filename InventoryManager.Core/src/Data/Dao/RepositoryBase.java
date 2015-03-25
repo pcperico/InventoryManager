@@ -113,4 +113,20 @@ public class RepositoryBase<T> implements IRepositoryBase<T> {
         }
         return inferedClass;
     }    
+
+    @Override
+    public void Update(T entity) {
+        try 
+        { 
+            beginOperation();
+            sesion.update(entity);
+        }catch(HibernateException he) 
+        { 
+            manageException(he);
+            throw he; 
+        }finally 
+        { 
+            finishOperation();
+        } 
+    }
 }

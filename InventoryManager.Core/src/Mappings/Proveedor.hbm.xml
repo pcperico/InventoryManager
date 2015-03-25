@@ -13,6 +13,10 @@
     <property name="Email" type="string"  column="Email"/>
     <property name="Active" type="int"  column="Active"/>
   </class>
+  <sql-query name="Proveedor.GetInactives">
+	<return alias="p" class="Data.Entities.Proveedor"/>
+	<![CDATA[select * from Proveedor p where p.Active = 0]]>
+  </sql-query>
   <sql-query name="Proveedor.GetActives">
 	<return alias="p" class="Data.Entities.Proveedor"/>
 	<![CDATA[select * from Proveedor p where p.Active = 1]]>
