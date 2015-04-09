@@ -6,8 +6,8 @@
 package Proveedor;
 
 import Data.Configuration.StringsKeysHelper;
-import Data.Dao.Interfaces.IProveedorRepository;
-import Data.Entities.Proveedor;
+import Data.Dao.Interfaces.IProviderRepository;
+import Data.Entities.Provider;
 import General.JInternalFrameCenter;
 import java.awt.Component;
 import java.util.List;
@@ -24,12 +24,12 @@ public class ListarProveedores extends JInternalFrameCenter {
     /**
      * Creates new form ListarProveedores
      */
-    IProveedorRepository _proveedorRepository;
+    IProviderRepository _proveedorRepository;
     DefaultTableModel dtm;
     public ListarProveedores() {
         initComponents();  
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(StringsKeysHelper.applicationContextFile);
-        _proveedorRepository = (IProveedorRepository) ctx.getBean(StringsKeysHelper.ProveedorRepository);
+        _proveedorRepository = (IProviderRepository) ctx.getBean(StringsKeysHelper.ProveedorRepository);
         dtm = new DefaultTableModel();
         dtm.addColumn("Id");
         dtm.addColumn("Nombre");
@@ -186,19 +186,19 @@ public class ListarProveedores extends JInternalFrameCenter {
     }// </editor-fold>//GEN-END:initComponents
     
     private void btn_listActivesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_listActivesActionPerformed
-        List<Proveedor> list = _proveedorRepository.GetAllActives();
+        List<Provider> list = _proveedorRepository.GetAllActives();
         this.fillTableProveedor(list, dtm);     
         flagBtnActiveDelete=0;
         this.btn_delete.setText("Desactivar");
     }//GEN-LAST:event_btn_listActivesActionPerformed
 
     private void bnt_filtrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_filtrarActionPerformed
-        List<Proveedor> list = _proveedorRepository.FindByName(this.txt_nombreProv.getText());
+        List<Provider> list = _proveedorRepository.FindByName(this.txt_nombreProv.getText());
         this.fillTableProveedor(list, dtm);
     }//GEN-LAST:event_bnt_filtrarActionPerformed
 
     private void btn_listAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_listAllActionPerformed
-        List<Proveedor>list = _proveedorRepository.GetAllInactives();
+        List<Provider>list = _proveedorRepository.GetAllInactives();
         this.fillTableProveedor(list, dtm);
         flagBtnActiveDelete=1;
         this.btn_delete.setText("Activar");
@@ -212,7 +212,7 @@ public class ListarProveedores extends JInternalFrameCenter {
     }//GEN-LAST:event_ProveedoresTableMouseClicked
 
     private void bnt_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_editActionPerformed
-        Proveedor p = _proveedorRepository.Get(proveedorId);
+        Provider p = _proveedorRepository.Get(proveedorId);
         AgregarProveedor ap = new AgregarProveedor();
         this.getParent().add(ap);
         this.dispose();
@@ -228,7 +228,7 @@ public class ListarProveedores extends JInternalFrameCenter {
              x= JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que desea activar este proveedor?");
              if(x==0)
              {
-                _proveedorRepository.EnableProveedor(proveedorId);
+                _proveedorRepository.EnableProvider(proveedorId);
                 JOptionPane.showMessageDialog(rootPane, "Proveedor desactivado correctamente!");        
              }            
         }
@@ -237,21 +237,21 @@ public class ListarProveedores extends JInternalFrameCenter {
             x = JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que desea desactivar este proveedor?");
             if(x==1)
             {
-                _proveedorRepository.DisableProveedor(proveedorId);
+                _proveedorRepository.DisableProvider(proveedorId);
             JOptionPane.showMessageDialog(rootPane, "Proveedor desactivado correctamente!");        
             }            
         }                
     }//GEN-LAST:event_btn_deleteActionPerformed
 
-    private void fillTableProveedor(List<Proveedor> proveedores,DefaultTableModel model)    
+    private void fillTableProveedor(List<Provider> proveedores,DefaultTableModel model)    
     {        
         model.setRowCount(0);
         this.ProveedoresTable.setModel(model);             
         Object [] fila = new Object[3];
-        for(Proveedor p:proveedores)
+        for(Provider p:proveedores)
         {
            fila[0]=p.getId();
-           fila[1] = p.getNombre();
+           fila[1] = p.getName();
            fila[2] = p.getActive()==1 ? "Activo":"Inactivo"; 
            model.addRow(fila);
         }     

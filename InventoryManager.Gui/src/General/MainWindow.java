@@ -7,6 +7,7 @@ package General;
 
 import Proveedor.AgregarProveedor;
 import Proveedor.ListarProveedores;
+import User.AddUser;
 
 import javax.swing.JFrame;
 
@@ -36,7 +37,11 @@ public class MainWindow extends javax.swing.JFrame {
         ProveedoresMenu = new javax.swing.JMenu();
         ProveedoresAdd = new javax.swing.JMenuItem();
         ProveedoresListar = new javax.swing.JMenuItem();
+        UsersMenu = new javax.swing.JMenu();
+        MenuAddUser = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("INVENTORY MANAGER");
@@ -66,7 +71,32 @@ public class MainWindow extends javax.swing.JFrame {
 
         jMenuBar1.add(ProveedoresMenu);
 
-        jMenu2.setText("Edit");
+        UsersMenu.setText("Usuarios");
+
+        MenuAddUser.setText("Agregar");
+        MenuAddUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAddUserActionPerformed(evt);
+            }
+        });
+        UsersMenu.add(MenuAddUser);
+
+        jMenuBar1.add(UsersMenu);
+
+        jMenu2.setText("Reportes");
+
+        jMenu1.setText("Proveedores");
+
+        jMenuItem2.setText("Proveedores Activos");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenu2.add(jMenu1);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -79,7 +109,7 @@ public class MainWindow extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 382, Short.MAX_VALUE)
+            .addGap(0, 384, Short.MAX_VALUE)
         );
 
         pack();
@@ -102,6 +132,18 @@ public class MainWindow extends javax.swing.JFrame {
         listProv.Centrar();
         listProv.show();
     }//GEN-LAST:event_ProveedoresListarActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        ReportGenerator rg = new ReportGenerator();
+        rg.Generar();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void MenuAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAddUserActionPerformed
+        AddUser au= new AddUser();
+        this.add(au);
+        au.Centrar();
+        au.show();
+    }//GEN-LAST:event_MenuAddUserActionPerformed
 
   
     /**
@@ -140,10 +182,14 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MenuAddUser;
     private javax.swing.JMenuItem ProveedoresAdd;
     private javax.swing.JMenuItem ProveedoresListar;
     private javax.swing.JMenu ProveedoresMenu;
+    private javax.swing.JMenu UsersMenu;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem2;
     // End of variables declaration//GEN-END:variables
 }

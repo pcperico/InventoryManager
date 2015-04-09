@@ -2,6 +2,6 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
  
 <beans> 
-  <bean id="IProveedorRepository" class="Data.Dao.Implementations.ProveedorRepository">    
-  </bean> 
+  <bean id="IProviderRepository" class="Data.Dao.Implementations.ProviderRepository"></bean> 
+  <bean id="IUserRepository" class="Data.Dao.Implementations.UserRepository"></bean> 
 </beans>
