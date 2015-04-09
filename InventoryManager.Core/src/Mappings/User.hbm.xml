@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="Mappings">
+  <class name="Data.Entities.User" table="[User]">
+    <id column="Id" name="Id" type="int">
+      <generator class="identity"/>
+    </id>
+    <property column="Name" name="Name" type="string"/>
+    <property column="LastName" name="LastName" type="string"/>
+    <property column="BirthDate" name="BirthDate" type="date"/>
+    <property column="Phone" name="Phone" type="string"/>
+    <property column="Email" name="Email" type="string"/>
+    <property column="Address" name="Address" type="string"/>
+    <property column="UserName" name="UserName" type="string"/>
+    <property column="Password" name="Password" type="string"/>
+  </class>  
+</hibernate-mapping>

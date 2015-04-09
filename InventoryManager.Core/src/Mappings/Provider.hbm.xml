@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="Mappings">
+  <class name="Data.Entities.Provider" table="Provider">
+    <id column="Id" name="Id" type="int">
+      <generator class="identity"/>
+    </id>
+    <property column="Name" name="Name" type="string"/>
+    <property column="Address" name="Address" type="string"/>
+    <property column="Phone" name="Phone" type="string"/>
+    <property column="Country" name="Country" type="string"/>
+    <property column="ContactName" name="ContactName" type="string"/>
+    <property column="Email" name="Email" type="string"/>
+    <property column="Active" name="Active" type="int"/>
+  </class>
+  <sql-query name="Provider.GetInactives">
+	<return alias="p" class="Data.Entities.Provider"/>
+	select * from Provider p where p.Active = 0
+  </sql-query>
+  <sql-query name="Provider.GetActives">
+	<return alias="p" class="Data.Entities.Provider"/>
+	select * from Provider p where p.Active = 1
+  </sql-query>
+  <sql-query name="Provider.FindByName">
+	<return alias="p" class="Data.Entities.Provider"/>
+	select * from Provider p where p.Name like :name 
+  </sql-query>
+</hibernate-mapping>
