@@ -224,17 +224,19 @@ public class AddUser extends JInternalFrameCenter {
     }//GEN-LAST:event_btn_exitActionPerformed
 
     private void bnt_aceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bnt_aceptActionPerformed
-      User u= _userRepository.createUser(this.txt_UName.getText().trim(),this.txt_ULastName.getText().trim(), this.dc_UBirthDate.getDate(), this.txt_UPhone.getText().trim(), this.txt_UEmail.getText().trim(), this.txt_UAddress.getText().trim(), this.txt_UUserName.getText().trim(),new String(this.txt_UPassword.getPassword()));
-      if(u!=null && u.getId()>0)
-      {
-          JOptionPane.showMessageDialog(rootPane, "Usuario insertado correctamente!!!");
-          this.clearFields(this.Panel);
-          this.dispose();
-      }
-      else
-      {
-          JOptionPane.showMessageDialog(rootPane, "Error al insertar el usuario, favor revisar los datos ingresados, intente de nuevo, si el problema persiste contactar al administrador del sistema");
-      }
+        try {
+            User u = _userRepository.createUser(this.txt_UName.getText().trim(), this.txt_ULastName.getText().trim(), this.dc_UBirthDate.getDate(), this.txt_UPhone.getText().trim(), this.txt_UEmail.getText().trim(), this.txt_UAddress.getText().trim(), this.txt_UUserName.getText().trim(), new String(this.txt_UPassword.getPassword()));
+            if (u != null && u.getId() > 0) {
+                JOptionPane.showMessageDialog(rootPane, "Usuario insertado correctamente!!!");
+                this.clearFields(this.Panel);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Error al insertar el usuario, favor revisar los datos ingresados, intente de nuevo, si el problema persiste contactar al administrador del sistema");
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+
+        }
     }//GEN-LAST:event_bnt_aceptActionPerformed
 
 

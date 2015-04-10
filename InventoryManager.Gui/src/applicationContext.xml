@@ -4,4 +4,5 @@
 <beans> 
   <bean id="IProviderRepository" class="Data.Dao.Implementations.ProviderRepository"></bean> 
   <bean id="IUserRepository" class="Data.Dao.Implementations.UserRepository"></bean> 
+  <bean id="ILoggerRepository" class="Logger.LoggerRepository"></bean> 
 </beans>
