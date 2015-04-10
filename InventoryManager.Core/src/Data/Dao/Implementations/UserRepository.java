@@ -14,13 +14,14 @@ import java.util.Date;
  *
  * @author GlobalDev
  */
-public class UserRepository extends RepositoryBase<User> implements IUserRepository{
+public class UserRepository extends RepositoryBase<User> implements IUserRepository{   
     @Override
     public User createUser(String name, String lastName, Date birthDate, String phone, String email, String address, String username, String password) {
         try
         {
             if(birthDate==null)
             {
+                this.LogSever(new Exception());
                 System.out.println("Error: invalid Date");
                 return null;
             }
@@ -31,9 +32,10 @@ public class UserRepository extends RepositoryBase<User> implements IUserReposit
             return u;
         }
         catch(Exception ex)
-        {
+        {        
+            this.LogSever(ex);
             System.out.println("Error when inserting user: "+ex.getMessage());
         }
         return null;
-    }    
+    }        
 }

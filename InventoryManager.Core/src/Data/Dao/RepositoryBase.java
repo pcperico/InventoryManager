@@ -6,11 +6,17 @@
 package Data.Dao;
 
 import Data.Configuration.HibernateUtil;
+import Data.Configuration.StringsKeysHelper;
+import Logger.LoggerRepository;
+import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
+import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -128,5 +134,24 @@ public class RepositoryBase<T> implements IRepositoryBase<T> {
         { 
             finishOperation();
         } 
+    }
+
+    Logger logger = Logger.getLogger("Logs");  
+    FileHandler fh;  
+    @Override
+    public void LogSever(Exception ex) {
+        try {          
+            fh = new FileHandler(StringsKeysHelper.GetConfigKeysApp().getProperty("logFile"),true);            
+            logger.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();  
+            fh.setFormatter(formatter);  
+        } catch (IOException ex1) {
+            JOptionPane.showMessageDialog(null, ex1.getMessage());
+        } catch (SecurityException ex1) {
+            JOptionPane.showMessageDialog(null, ex1.getMessage());
+        }
+        logger.severe(ex.getMessage());
+        fh.flush();
+        fh.close();
     }
 }

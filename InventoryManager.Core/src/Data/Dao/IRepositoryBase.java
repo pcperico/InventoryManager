@@ -17,4 +17,5 @@ public interface IRepositoryBase<T> {
     public List<T> GetAll();
     public T Get(int id);
     public void Update(T entity);
+    public void LogSever(Exception ex);
 }
