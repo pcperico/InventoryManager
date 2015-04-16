@@ -7,7 +7,6 @@ package Data.Dao;
 
 import Data.Configuration.HibernateUtil;
 import Data.Configuration.StringsKeysHelper;
-import Logger.LoggerRepository;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

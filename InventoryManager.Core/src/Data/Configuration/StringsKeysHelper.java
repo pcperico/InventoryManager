@@ -5,12 +5,9 @@
  */
 package Data.Configuration;
 
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,12 +19,11 @@ import java.util.logging.Logger;
 public class StringsKeysHelper {
     public static final String applicationContextFile="applicationContext.xml";
     public static final String ProveedorRepository="IProviderRepository";
-    public static final String UserRepository="IUserRepository";
-    public static final String LoggerRepository="ILoggerRepository";
+    public static final String UserRepository="IUserRepository";    
     public static String GetAppConfigPath()
     {
-        URL location = DatabaseConnection.class.getProtectionDomain().getCodeSource().getLocation();
-        return location.getPath();
+        File file=new File("");        
+        return file.getAbsolutePath()+"\\src";
     }
         
     public static Properties GetConfigKeysApp()
