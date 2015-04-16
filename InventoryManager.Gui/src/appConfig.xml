@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="jdbcConnectionString">jdbc:sqlserver://localhost;user=sa;password=123456;database=InventoryManagerDB</entry>
+    <entry key="jdbcDriver">com.microsoft.sqlserver.jdbc.SQLServerDriver</entry>    
+    <entry key="logFile">F:\Projects\InventoryManager\InventoryManager.Gui\dist\Log.log</entry>    
+</properties>
