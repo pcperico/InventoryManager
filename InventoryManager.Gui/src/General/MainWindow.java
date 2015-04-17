@@ -7,6 +7,7 @@ package General;
 
 import Proveedor.AgregarProveedor;
 import Proveedor.ListarProveedores;
+import Units.ListUnits;
 import User.AddUser;
 
 import javax.swing.JFrame;
@@ -34,6 +35,8 @@ public class MainWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuBar1 = new javax.swing.JMenuBar();
+        AdminMenu = new javax.swing.JMenu();
+        UnitsMenu = new javax.swing.JMenuItem();
         ProveedoresMenu = new javax.swing.JMenu();
         ProveedoresAdd = new javax.swing.JMenuItem();
         ProveedoresListar = new javax.swing.JMenuItem();
@@ -50,6 +53,18 @@ public class MainWindow extends javax.swing.JFrame {
                 formWindowOpened(evt);
             }
         });
+
+        AdminMenu.setText("Administracion");
+
+        UnitsMenu.setText("Unidades de Medida");
+        UnitsMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UnitsMenuActionPerformed(evt);
+            }
+        });
+        AdminMenu.add(UnitsMenu);
+
+        jMenuBar1.add(AdminMenu);
 
         ProveedoresMenu.setText("Proveeedores");
 
@@ -145,6 +160,13 @@ public class MainWindow extends javax.swing.JFrame {
         au.show();
     }//GEN-LAST:event_MenuAddUserActionPerformed
 
+    private void UnitsMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UnitsMenuActionPerformed
+        ListUnits lu = new ListUnits();
+        this.add(lu);
+        lu.Centrar();
+        lu.show();                
+    }//GEN-LAST:event_UnitsMenuActionPerformed
+
   
     /**
      * @param args the command line arguments
@@ -182,10 +204,12 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu AdminMenu;
     private javax.swing.JMenuItem MenuAddUser;
     private javax.swing.JMenuItem ProveedoresAdd;
     private javax.swing.JMenuItem ProveedoresListar;
     private javax.swing.JMenu ProveedoresMenu;
+    private javax.swing.JMenuItem UnitsMenu;
     private javax.swing.JMenu UsersMenu;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;

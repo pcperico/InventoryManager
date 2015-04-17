@@ -5,10 +5,13 @@
  */
 package General;
 
+import Data.Entities.Provider;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Point;
+import java.util.List;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
