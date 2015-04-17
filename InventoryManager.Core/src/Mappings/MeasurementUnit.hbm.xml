@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="Mappings">
+  <class name="Data.Entities.MeasurementUnit" table="MeasurementUnit">
+    <id column="Id" name="Id" type="int">
+      <generator class="identity"/>
+    </id>
+    <property column="Description" name="Description" type="string"/>    
+    <property column="Abbreviation" name="Abbreviation" type="string"/>    
+  </class>  
+</hibernate-mapping>

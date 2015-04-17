@@ -11,5 +11,6 @@
     <property name="hibernate.show_sql">true</property>
     <mapping resource="Mappings/Provider.hbm.xml"/>
     <mapping resource="Mappings/User.hbm.xml"/>
+    <mapping resource="Mappings/MeasurementUnit.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

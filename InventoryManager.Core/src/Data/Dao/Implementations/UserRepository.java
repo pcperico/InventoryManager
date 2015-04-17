@@ -21,8 +21,7 @@ public class UserRepository extends RepositoryBase<User> implements IUserReposit
         {
             if(birthDate==null)
             {
-                this.LogSever(new Exception());
-                System.out.println("Error: invalid Date");
+                this.LogInfo("Invalid date on birthdate of user");                
                 return null;
             }
             
@@ -33,8 +32,7 @@ public class UserRepository extends RepositoryBase<User> implements IUserReposit
         }
         catch(Exception ex)
         {        
-            this.LogSever(ex);
-            System.out.println("Error when inserting user: "+ex.getMessage());
+            this.LogSever(ex);            
         }
         return null;
     }        
