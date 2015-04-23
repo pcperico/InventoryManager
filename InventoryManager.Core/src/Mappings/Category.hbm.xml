@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="Mappings">
+  <class name="Data.Entities.Category" table="Category">
+    <id column="Id" name="Id" type="int">
+      <generator class="identity"/>
+    </id>
+    <property column="Description" name="Description" type="string"/>        
+  </class>   
+  <sql-query name="Category.FindByDescription">    
+    <return-scalar column="Id" type="int"/>
+    <return-scalar column="Description" type="string"/>
+    <return-scalar column="TotalProducts" type="int"/>    
+    select c.id, c.description, count(p.Id) as TotalProducts	
+        from Category c left join Product p
+                on c.id = p.CategoryId
+        where c.Description like :description
+        group by c.id,c.Description;
+  </sql-query>    
+</hibernate-mapping>

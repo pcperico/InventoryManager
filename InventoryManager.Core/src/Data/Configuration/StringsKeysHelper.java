@@ -21,6 +21,8 @@ public class StringsKeysHelper {
     public static final String ProveedorRepository="IProviderRepository";
     public static final String UserRepository="IUserRepository";    
     public static final String MeasurementeUnitRepository="IMeasurementUnitRepository";   
+    public static final String CategoryRepository="ICategoryRepository";  
+    
     public static String GetAppConfigPath()
     {
         File file=new File("");        

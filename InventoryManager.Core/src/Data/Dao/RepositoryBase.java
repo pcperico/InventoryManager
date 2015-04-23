@@ -15,7 +15,6 @@ import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -143,6 +142,7 @@ public class RepositoryBase<T> implements IRepositoryBase<T> {
 
     Logger logger = Logger.getLogger("Logs");  
     FileHandler fh;  
+    
     @Override
     public void LogSever(Exception ex) {        
         try {          
@@ -162,6 +162,7 @@ public class RepositoryBase<T> implements IRepositoryBase<T> {
         fh.flush();
         fh.close();
     }
+    
     @Override
     public void LogInfo(String info) {
         try {      

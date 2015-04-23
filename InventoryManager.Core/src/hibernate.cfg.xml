@@ -12,5 +12,6 @@
     <mapping resource="Mappings/Provider.hbm.xml"/>
     <mapping resource="Mappings/User.hbm.xml"/>
     <mapping resource="Mappings/MeasurementUnit.hbm.xml"/>
+    <mapping resource="Mappings/Category.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

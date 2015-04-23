@@ -8,4 +8,8 @@
     <property column="Description" name="Description" type="string"/>    
     <property column="Abbreviation" name="Abbreviation" type="string"/>    
   </class>  
+   <sql-query name="MeasurementUnit.FindByDescription">
+	<return alias="mu" class="Data.Entities.MeasurementUnit"/>
+	select * from MeasurementUnit mu where mu.Description like :description 
+  </sql-query>
 </hibernate-mapping>

@@ -8,6 +8,7 @@ package Data.Dao.Implementations;
 import Data.Dao.Interfaces.IMeasurementUnitRepository;
 import Data.Dao.RepositoryBase;
 import Data.Entities.MeasurementUnit;
+import java.util.List;
 
 /**
  *
@@ -33,4 +34,34 @@ public class MeasurementUnitRepository extends RepositoryBase<MeasurementUnit> i
             return false;
         }       
     }    
+
+    @Override
+    public List<MeasurementUnit> FindByDescription(String description) {
+        try
+        {
+            beginOperation();
+            List<MeasurementUnit> units= sesion.getNamedQuery("MeasurementUnit.FindByDescription").setString("description","%"+ description+"%").list();       
+            sesion.close();
+            return units;
+        }
+        catch(Exception ex)
+        {
+            this.LogSever(ex);
+            return null;
+        }        
+    }
+
+    @Override
+    public Boolean UpdateUnit(MeasurementUnit mu) {
+        try
+        {
+            this.Update(mu);
+            return true;
+        }
+        catch(Exception ex)
+        {
+            this.LogSever(ex);
+            return false;
+        }
+    }
 }

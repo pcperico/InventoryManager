@@ -7,6 +7,7 @@ package Data.Dao.Interfaces;
 
 import Data.Dao.IRepositoryBase;
 import Data.Entities.MeasurementUnit;
+import java.util.List;
 
 /**
  *
@@ -14,4 +15,6 @@ import Data.Entities.MeasurementUnit;
  */
 public interface IMeasurementUnitRepository extends IRepositoryBase<MeasurementUnit> {
     public Boolean CreateNewUnit(String description, String abbreviation);
+    public Boolean UpdateUnit(MeasurementUnit mu);
+    public List<MeasurementUnit> FindByDescription(String description);
 }
