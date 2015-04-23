@@ -28,8 +28,9 @@ public class ListUnits extends JInternalFrameCenter{
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(StringsKeysHelper.applicationContextFile);
         _measurementUnitRepository =(IMeasurementUnitRepository) ctx.getBean(StringsKeysHelper.MeasurementeUnitRepository);
         dtm = new DefaultTableModel();
-        dtm.addColumn("Id");
-        dtm.addColumn("Descripcion");        
+        dtm.addColumn("Descripcion");
+        dtm.addColumn("Abreviacion");  
+        dtm.addColumn("");        
     }
 
     
@@ -37,11 +38,14 @@ public class ListUnits extends JInternalFrameCenter{
     {        
         model.setRowCount(0);
         this.tbl_Units.setModel(model);             
+        this.tbl_Units.getColumnModel().getColumn(2).setMinWidth(0);
+        this.tbl_Units.getColumnModel().getColumn(2).setMaxWidth(0);
         Object [] fila = new Object[3];
         for(MeasurementUnit p:units)
         {
-           fila[0]=p.getId();
-           fila[1] = p.getDescription();           
+           fila[0]=p.getDescription();
+           fila[1] = p.getAbbreviation(); 
+           fila[2] = p.getId();           
            model.addRow(fila);
         }     
     }
@@ -65,7 +69,7 @@ public class ListUnits extends JInternalFrameCenter{
         btn_add = new javax.swing.JButton();
 
         setClosable(true);
-        setTitle("Unidades de Medida");
+        setTitle("Modulo Unidades de Medida");
 
         Panel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
@@ -80,9 +84,19 @@ public class ListUnits extends JInternalFrameCenter{
 
             }
         ));
+        tbl_Units.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_UnitsMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_Units);
 
         btn_search.setText("Buscar");
+        btn_search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_searchActionPerformed(evt);
+            }
+        });
 
         btn_list.setText("Listar");
         btn_list.addActionListener(new java.awt.event.ActionListener() {
@@ -92,6 +106,12 @@ public class ListUnits extends JInternalFrameCenter{
         });
 
         btn_modify.setText("Modificar");
+        btn_modify.setEnabled(false);
+        btn_modify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modifyActionPerformed(evt);
+            }
+        });
 
         lb_totalUnits.setText("Total Unidades:");
 
@@ -175,6 +195,27 @@ public class ListUnits extends JInternalFrameCenter{
         Aeu.Centrar();
         Aeu.show();
     }//GEN-LAST:event_btn_addActionPerformed
+
+    private void btn_searchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_searchActionPerformed
+        this.fillTableUnits(_measurementUnitRepository.FindByDescription(this.txt_search.getText()), dtm);
+         this.lb_totalUnits.setText("Total Unidades: "+ dtm.getRowCount());
+    }//GEN-LAST:event_btn_searchActionPerformed
+
+    private void btn_modifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modifyActionPerformed
+        AddEditUnits aeu = new AddEditUnits(_measurementUnitRepository.Get(unitId));        
+        this.getParent().add(aeu);
+        this.dispose();
+        aeu.Centrar();
+        aeu.show();
+    }//GEN-LAST:event_btn_modifyActionPerformed
+    int unitId=0;
+    private void tbl_UnitsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_UnitsMouseClicked
+        unitId =(int) this.tbl_Units.getValueAt(this.tbl_Units.getSelectedRow(),2);        
+        if(unitId>0)
+            this.btn_modify.setEnabled(true);
+        else
+            this.btn_modify.setEnabled(false);
+    }//GEN-LAST:event_tbl_UnitsMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

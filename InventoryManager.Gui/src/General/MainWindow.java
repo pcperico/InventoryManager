@@ -5,6 +5,7 @@
  */
 package General;
 
+import Category.ListCategories;
 import Proveedor.AgregarProveedor;
 import Proveedor.ListarProveedores;
 import Units.ListUnits;
@@ -36,6 +37,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         jMenuBar1 = new javax.swing.JMenuBar();
         AdminMenu = new javax.swing.JMenu();
+        CategoriesMenu = new javax.swing.JMenuItem();
         UnitsMenu = new javax.swing.JMenuItem();
         ProveedoresMenu = new javax.swing.JMenu();
         ProveedoresAdd = new javax.swing.JMenuItem();
@@ -55,6 +57,14 @@ public class MainWindow extends javax.swing.JFrame {
         });
 
         AdminMenu.setText("Administracion");
+
+        CategoriesMenu.setText("Categorias");
+        CategoriesMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CategoriesMenuActionPerformed(evt);
+            }
+        });
+        AdminMenu.add(CategoriesMenu);
 
         UnitsMenu.setText("Unidades de Medida");
         UnitsMenu.addActionListener(new java.awt.event.ActionListener() {
@@ -167,6 +177,13 @@ public class MainWindow extends javax.swing.JFrame {
         lu.show();                
     }//GEN-LAST:event_UnitsMenuActionPerformed
 
+    private void CategoriesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CategoriesMenuActionPerformed
+        ListCategories lc = new ListCategories();        
+        this.add(lc);
+        lc.Centrar();
+        lc.show();
+    }//GEN-LAST:event_CategoriesMenuActionPerformed
+
   
     /**
      * @param args the command line arguments
@@ -205,6 +222,7 @@ public class MainWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu AdminMenu;
+    private javax.swing.JMenuItem CategoriesMenu;
     private javax.swing.JMenuItem MenuAddUser;
     private javax.swing.JMenuItem ProveedoresAdd;
     private javax.swing.JMenuItem ProveedoresListar;

@@ -5,4 +5,5 @@
   <bean id="IProviderRepository" class="Data.Dao.Implementations.ProviderRepository"></bean> 
   <bean id="IUserRepository" class="Data.Dao.Implementations.UserRepository"></bean>   
   <bean id="IMeasurementUnitRepository" class="Data.Dao.Implementations.MeasurementUnitRepository"></bean>   
+  <bean id="ICategoryRepository" class="Data.Dao.Implementations.CategoryRepository"></bean>   
 </beans>

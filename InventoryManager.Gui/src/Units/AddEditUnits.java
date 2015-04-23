@@ -7,6 +7,7 @@ package Units;
 
 import Data.Configuration.StringsKeysHelper;
 import Data.Dao.Interfaces.IMeasurementUnitRepository;
+import Data.Entities.MeasurementUnit;
 import General.JInternalFrameCenter;
 import javax.swing.JOptionPane;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -21,12 +22,32 @@ public class AddEditUnits extends JInternalFrameCenter {
      * Creates new form AddEditUnits
      */
     IMeasurementUnitRepository _measurementUnitRepository;
+    MeasurementUnit _mu;
+    Boolean flagEdit=false;
+        
     public AddEditUnits() {
-        initComponents();
+        initComponents();        
         ClassPathXmlApplicationContext ctx=  new ClassPathXmlApplicationContext(StringsKeysHelper.applicationContextFile);
-        _measurementUnitRepository = (IMeasurementUnitRepository)ctx.getBean(StringsKeysHelper.MeasurementeUnitRepository);
+        _measurementUnitRepository = (IMeasurementUnitRepository)ctx.getBean(StringsKeysHelper.MeasurementeUnitRepository);        
     }
-
+    
+    public AddEditUnits(MeasurementUnit mu)
+    {
+        this();
+        _mu=mu;
+        if(_mu!=null)
+        {
+            this.txt_description.setText(_mu.getDescription());
+            this.txt_abbreviation.setText(_mu.getAbbreviation());
+            this.btn_ok.setText("Actualizar");
+            flagEdit=true;
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(rootPane, "No se pudo cargar la informacion de la Unidad, favor reintente.");
+            this.dispose();
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -69,7 +90,7 @@ public class AddEditUnits extends JInternalFrameCenter {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2))
@@ -81,7 +102,7 @@ public class AddEditUnits extends JInternalFrameCenter {
                         .addComponent(btn_exit))
                     .addComponent(txt_description, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_abbreviation, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,7 +119,7 @@ public class AddEditUnits extends JInternalFrameCenter {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_ok)
                     .addComponent(btn_exit))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         pack();
@@ -109,10 +130,23 @@ public class AddEditUnits extends JInternalFrameCenter {
     }//GEN-LAST:event_btn_exitActionPerformed
 
     private void btn_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_okActionPerformed
-        if(_measurementUnitRepository.CreateNewUnit(this.txt_description.getText(), this.txt_abbreviation.getText()))
-            JOptionPane.showMessageDialog(rootPane,"Unidad creada exitosamente");
+        if(flagEdit)
+        {
+            _mu.setDescription(this.txt_description.getText());
+            _mu.setAbbreviation(this.txt_abbreviation.getText());
+            if(_measurementUnitRepository.UpdateUnit(_mu))
+                JOptionPane.showMessageDialog(rootPane, "Unidad modificada exitosamente.");
+            else
+                JOptionPane.showMessageDialog(rootPane, "Hubo un error mientras se modificaba la unidad.");            
+        }
         else
-            JOptionPane.showMessageDialog(rootPane,"Hubo un error mientras se creaba la unidad, favor reintente o contacte con el administrador del sistema");
+        {
+            if(_measurementUnitRepository.CreateNewUnit(this.txt_description.getText(), this.txt_abbreviation.getText()))
+                JOptionPane.showMessageDialog(rootPane,"Unidad creada exitosamente");
+            else
+                JOptionPane.showMessageDialog(rootPane,"Hubo un error mientras se creaba la unidad, favor reintente o contacte con el administrador del sistema");
+        } 
+        this.dispose();
     }//GEN-LAST:event_btn_okActionPerformed
 
 
